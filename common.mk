@@ -198,6 +198,7 @@ PRODUCT_PACKAGES += \
     libxml2 \
     Snap \
     libcamera_metadata_shim \
+    libutilscallstack.vendor:64 \
     vendor.oneplus.hardware.camera@1.0.vendor:64 \
     vendor.qti.hardware.camera.device@1.0.vendor:64
 
@@ -399,9 +400,12 @@ PRODUCT_PACKAGES += \
 
 # QMI
 PRODUCT_PACKAGES += \
+    libcurl.vendor:64 \
     libjson \
+    libjsoncpp.vendor \
     libqti_vndfwk_detect \
     libqti_vndfwk_detect.vendor \
+    libsqlite.vendor:64 \
     libvndfwk_detect_jni.qti.vendor
 
 # RIL
@@ -425,6 +429,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     als_correction_service.oneplus_msmnile \
     android.hardware.sensors@2.0-service.oneplus_msmnile \
+    libdumpstateutil.vendor:64 \
     sensors.oneplus \
     libsensorndkbridge
 
@@ -547,6 +552,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.media.audio.common.types-V2-cpp \
     libnl \
+    libpng.vendor:32 \
+    libprocessgroup.vendor:32 \
     libwfdaac_vendor
 
 # Disable configstore
