@@ -972,3 +972,19 @@ vendor/lib/libwfduibcsrcinterface_proprietary.so|bfd97b6d662657234774a3c9c87f8a0
 vendor/lib/libwfdutils_proprietary.so|788cc674ac7ba6e4c985ec9e8515c143f55e881b
 vendor/lib/vendor.qti.hardware.wifidisplaysession@1.0.so|c08e1803c3089ee5da37b0a56eb9c2bdf9aeb4b2
 vendor/lib/vendor.qti.hardware.wifidisplaysessionl@1.0-halimpl.so|fefea0a3279f850e562cfaaf4fe3b24af1dd3994
+
+# Several missing blobs copied from OnePlus 10 Pro op516fl1 (qssi-user 14 UKQ1.230924.001 1715445374120 release-keys)
+system_ext/lib64/libcomposerextn.qti.so
+system_ext/lib64/libdolphin.so
+system_ext/lib64/liblayerext.qti.so
+system_ext/lib64/libpenguin.so
+system_ext/lib64/libpenguin_impl.so
+vendor/lib64/libcamxexternalformatutils.so
+vendor/lib64/libgpudataproducer.so
+vendor/lib64/libipebpsstriping.so
+vendor/lib64/libipebpsstriping170.so
+vendor/lib64/libkcl.so
+vendor/lib64/libkernelmanager.so
+
+# Missing FOD blob from OnePlus 7 guacamoleb (OnePlus/OnePlus7/OnePlus7:11/RKQ1.201022.002/2206171327:user/release-keys)
+vendor/lib64/hw/goodix.fod.msmnile.so
