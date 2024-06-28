@@ -51,8 +51,8 @@
         android:summary="@string/touchscreen_gesture_settings_summary"
         android:persistent="false" >
         <intent android:action="android.intent.action.MAIN"
-                android:targetPackage="com.derp.device.DeviceSettings"
-                android:targetClass="com.derp.device.DeviceSettings.TouchscreenGestureSettings" />
+                android:targetPackage="com.everest.device.DeviceSettings"
+                android:targetClass="com.everest.device.DeviceSettings.TouchscreenGestureSettings" />
     </Preference>
 
     <PreferenceCategory

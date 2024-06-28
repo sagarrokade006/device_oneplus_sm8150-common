@@ -172,9 +172,9 @@ SOONG_CONFIG_ONEPLUS_MSMNILE_SENSORS := ALS_POS_X ALS_POS_Y
 BOARD_AVB_ENABLE := true
 ifneq (user,$(TARGET_BUILD_VARIANT))
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-else ifneq (,$(wildcard vendor/derp/signing/keys/releasekey.key))
+else ifneq (,$(wildcard vendor/everest/signing/keys/releasekey.key))
 BOARD_AVB_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_KEY_PATH := vendor/derp/signing/keys/releasekey.key
+BOARD_AVB_KEY_PATH := vendor/everest/signing/keys/releasekey.key
 else
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 endif
@@ -201,4 +201,4 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     $(VENDOR_PATH)/configs/vintf/oneplus_vendor_framework_compatibility_matrix.xml \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix_legacy.xml \
-    vendor/derp/config/device_framework_matrix.xml
+    vendor/everest/config/device_framework_matrix.xml

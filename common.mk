@@ -18,9 +18,6 @@ $(call inherit-product, $(LOCAL_PATH)/interfaces.mk)
 # Dalvik
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
-# Derp versioning
-DERP_VERSION_APPEND_TIME_OF_DAY := true
-
 # Viper
 $(call inherit-product, packages/apps/ViPER4AndroidFX/config.mk)
 
@@ -44,7 +41,7 @@ PRODUCT_COPY_FILES += \
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-derp
+    $(LOCAL_PATH)/overlay-everest
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
@@ -120,7 +117,7 @@ PRODUCT_PACKAGES += \
     AntHalService-Soong \
     com.dsi.ant@1.0.vendor
 
-# DERP Device Settings
+# EverestOS Device Settings
 PRODUCT_PACKAGES += \
     DeviceSettings
 
