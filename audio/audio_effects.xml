@@ -46,6 +46,16 @@
         <!--AW VIBRATOR END-->
         <library name="v4a_re" path="libv4a_re.so"/>
 	<!-- END-->
+        <!-- #ifdef OPLUS_FEATURE_DOLBY -->
+        <!-- WuHao@MULTIMEDIA.AUDIOSERVER.EFFECT, 2019/09/18, add for dolby -->
+        <!-- DOLBY DAP -->
+        <library name="dap_sw" path="libswdap_v3_6.so"/>
+        <library name="dap_hw" path="libhwdap_v3_6.so"/>
+        <!-- DOLBY END -->
+        <!-- DOLBY VQE -->
+        <library name="vqe" path="libswvqe_v3_6.so"/>
+        <!-- DOLBY END -->
+        <!-- #endif OPLUS_FEATURE_DOLBY -->
     </libraries>
     <effects>
         <effectProxy name="bassboost" library="proxy" uuid="14804144-a5ee-4d24-aa88-0002a5d5c51b">
@@ -100,24 +110,45 @@
         <!--AW VIBRATOR END-->
         <effect name="v4a_standard_re" library="v4a_re" uuid="90380da3-8536-4744-a6a3-5731970e640f"/>
 	<!-- END-->
+        <!-- #ifdef OPLUS_FEATURE_DOLBY -->
+        <!-- WuHao@MULTIMEDIA.AUDIOSERVER.EFFECT, 2019/09/18, add for dolby -->
+        <!-- DOLBY DAP -->
+        <effectProxy name="dap" library="proxy" uuid="9d4921da-8225-4f29-aefa-39537a04bcaa">
+            <libsw library="dap_sw" uuid="6ab06da4-c516-4611-8166-452799218539"/>
+            <libhw library="dap_hw" uuid="a0c30891-8246-4aef-b8ad-d53e26da0253"/>
+        </effectProxy>
+        <!-- DOLBY END -->
+        <!-- DOLBY VQE -->
+        <effect name="vqe" library="vqe" uuid="64a0f614-7fa4-48b8-b081-d59dc954616f"/>
+        <!-- DOLBY END -->
+        <!-- #endif OPLUS_FEATURE_DOLBY -->
     </effects>
     <postprocess>
+    <!-- #ifndef OPLUS_FEATURE_DOLBY -->
+    <!-- WuHao@MULTIMEDIA.AUDIOSERVER.EFFECT, 2019/09/18, Remove for dolby -->
+    <!--
         <stream type="music">
             <apply effect="music_helper"/>
         </stream>
-        <!-- #ifdef VENDOR_EDIT heilay.he@media, 2019/09/09, [HD-13502] disable volume listener for ring-->
-        <!--stream type="ring">
+        <stream type="ring">
             <apply effect="ring_helper"/>
-        </stream-->
+        </stream>
         <stream type="alarm">
             <apply effect="alarm_helper"/>
         </stream>
+    -->
+    <!-- #endif OPLUS_FEATURE_DOLBY -->
         <stream type="voice_call">
             <apply effect="voice_helper"/>
         </stream>
+    <!-- #ifndef OPLUS_FEATURE_DOLBY -->
+    <!-- WuHao@MULTIMEDIA.AUDIOSERVER.EFFECT, 2019/09/18, Remove for dolby -->
+    <!--
         <stream type="notification">
             <apply effect="notification_helper"/>
         </stream>
+    -->
+    <!-- #endif OPLUS_FEATURE_DOLBY -->
     </postprocess>
     <preprocess>
         <stream type="voice_communication">
