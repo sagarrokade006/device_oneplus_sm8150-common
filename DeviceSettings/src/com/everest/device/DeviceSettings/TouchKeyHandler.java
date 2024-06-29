@@ -24,9 +24,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CameraManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -67,7 +64,6 @@ public class TouchKeyHandler implements DeviceKeyHandler {
     private final PowerManager mPowerManager;
     private final WakeLock mGestureWakeLock;
     private final EventHandler mEventHandler;
-    private final CameraManager mCameraManager;
     private final Vibrator mVibrator;
 
     private final SparseIntArray mActionMapping = new SparseIntArray();
@@ -106,9 +102,6 @@ public class TouchKeyHandler implements DeviceKeyHandler {
 
         mEventHandler = new EventHandler();
 
-        mCameraManager = mContext.getSystemService(CameraManager.class);
-        mCameraManager.registerTorchCallback(new TorchModeCallback(), mEventHandler);
-
         mVibrator = context.getSystemService(Vibrator.class);
 
         mSensorManager = context.getSystemService(SensorManager.class);
@@ -118,21 +111,7 @@ public class TouchKeyHandler implements DeviceKeyHandler {
                 "DeviceKeyHandler:TouchscreenGestureProximityWakeLock");
         mContext.registerReceiver(mUpdateReceiver,
                 new IntentFilter(Constants.UPDATE_PREFS_ACTION));
-    }
-
-    private class TorchModeCallback extends CameraManager.TorchCallback {
-        @Override
-        public void onTorchModeChanged(String cameraId, boolean enabled) {
-            if (!cameraId.equals(mRearCameraId)) return;
-            mTorchEnabled = enabled;
         }
-
-        @Override
-        public void onTorchModeUnavailable(String cameraId) {
-            if (!cameraId.equals(mRearCameraId)) return;
-            mTorchEnabled = false;
-        }
-    }
 
     public KeyEvent handleKeyEvent(final KeyEvent event) {
         final int action = mActionMapping.get(event.getScanCode(), -1);
@@ -196,39 +175,6 @@ public class TouchKeyHandler implements DeviceKeyHandler {
         @Override
         public void handleMessage(final Message msg) {
             switch (msg.arg1) {
-                case Constants.ACTION_CAMERA:
-                    launchCamera();
-                    break;
-                case Constants.ACTION_FLASHLIGHT:
-                    toggleFlashlight();
-                    break;
-                case Constants.ACTION_BROWSER:
-                    launchBrowser();
-                    break;
-                case Constants.ACTION_DIALER:
-                    launchDialer();
-                    break;
-                case Constants.ACTION_EMAIL:
-                    launchEmail();
-                    break;
-                case Constants.ACTION_MESSAGES:
-                    launchMessages();
-                    break;
-                case Constants.ACTION_PLAY_PAUSE_MUSIC:
-                    playPauseMusic();
-                    break;
-                case Constants.ACTION_PREVIOUS_TRACK:
-                    previousTrack();
-                    break;
-                case Constants.ACTION_NEXT_TRACK:
-                    nextTrack();
-                    break;
-                case Constants.ACTION_VOLUME_DOWN:
-                    volumeDown();
-                    break;
-                case Constants.ACTION_VOLUME_UP:
-                    volumeUp();
-                    break;
                 case Constants.ACTION_AMBIENT_DISPLAY:
                     launchDozePulse();
                     break;
@@ -237,90 +183,6 @@ public class TouchKeyHandler implements DeviceKeyHandler {
                     break;
             }
         }
-    }
-
-    private void launchCamera() {
-        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-        final Intent intent = new Intent(android.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
-        mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT,
-                Manifest.permission.STATUS_BAR_SERVICE);
-        doHapticFeedback();
-    }
-
-    private void launchBrowser() {
-        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-        mPowerManager.wakeUp(SystemClock.uptimeMillis(), GESTURE_WAKEUP_REASON);
-        final Intent intent = getLaunchableIntent(
-                new Intent(Intent.ACTION_VIEW, Uri.parse("http:")));
-        startActivitySafely(intent);
-        doHapticFeedback();
-    }
-
-    private void launchDialer() {
-        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-        mPowerManager.wakeUp(SystemClock.uptimeMillis(), GESTURE_WAKEUP_REASON);
-        final Intent intent = new Intent(Intent.ACTION_DIAL, null);
-        startActivitySafely(intent);
-        doHapticFeedback();
-    }
-
-    private void launchEmail() {
-        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-        mPowerManager.wakeUp(SystemClock.uptimeMillis(), GESTURE_WAKEUP_REASON);
-        final Intent intent = getLaunchableIntent(
-                new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:")));
-        startActivitySafely(intent);
-        doHapticFeedback();
-    }
-
-    private void launchMessages() {
-        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-        mPowerManager.wakeUp(SystemClock.uptimeMillis(), GESTURE_WAKEUP_REASON);
-        final Intent intent = getLaunchableIntent(
-                new Intent(Intent.ACTION_VIEW, Uri.parse("sms:")));
-        startActivitySafely(intent);
-        doHapticFeedback();
-    }
-
-    private void toggleFlashlight() {
-        String rearCameraId = getRearCameraId();
-        if (rearCameraId != null) {
-            mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-            try {
-                mCameraManager.setTorchMode(rearCameraId, !mTorchEnabled);
-                mTorchEnabled = !mTorchEnabled;
-            } catch (CameraAccessException e) {
-                // Ignore
-            }
-            doHapticFeedback();
-        }
-    }
-
-    private void playPauseMusic() {
-        dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
-        doHapticFeedback();
-    }
-
-    private void previousTrack() {
-        dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
-        doHapticFeedback();
-    }
-
-    private void nextTrack() {
-        dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_NEXT);
-        doHapticFeedback();
-    }
-
-    private void volumeDown() {
-        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-        mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 0);
-        doHapticFeedback();
-    }
-
-    private void volumeUp() {
-        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-        mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 0);
-        doHapticFeedback();
     }
 
     private void launchDozePulse() {
@@ -380,25 +242,6 @@ public class TouchKeyHandler implements DeviceKeyHandler {
                 mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK));
             }
         }
-    }
-
-    private String getRearCameraId() {
-        if (mRearCameraId == null) {
-            try {
-                for (final String cameraId : mCameraManager.getCameraIdList()) {
-                    final CameraCharacteristics characteristics =
-                            mCameraManager.getCameraCharacteristics(cameraId);
-                    final int orientation = characteristics.get(CameraCharacteristics.LENS_FACING);
-                    if (orientation == CameraCharacteristics.LENS_FACING_BACK) {
-                        mRearCameraId = cameraId;
-                        break;
-                    }
-                }
-            } catch (CameraAccessException e) {
-                // Ignore
-            }
-        }
-        return mRearCameraId;
     }
 
     private Intent getLaunchableIntent(Intent intent) {

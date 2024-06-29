@@ -44,17 +44,12 @@ import com.everest.device.DeviceSettings.ModeSwitch.ReadingModeSwitch;
 public class DeviceSettings extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String KEY_CATEGORY_CAMERA = "camera";
     private static final String KEY_HBM_SWITCH = "hbm";
 
     private static final String KEY_REFRESH_RATE = "refresh_rate";
-    private static final String KEY_ALWAYS_CAMERA_DIALOG = "always_on_camera_dialog";
     public static final String KEY_FPS_INFO = "fps_info";
 
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
-
-    private static final String POPUP_HELPER_PKG_NAME = "org.lineageos.camerahelper";
-
 
     private AmbientDisplayConfiguration mAmbientDisplayConfiguration;
 
@@ -62,7 +57,6 @@ public class DeviceSettings extends PreferenceFragment implements
     private TwoStatePreference mHBMModeSwitch;
     private TwoStatePreference mRefreshRate;
     private SwitchPreferenceCompat mFpsInfo;
-    private SwitchPreferenceCompat mAlwaysCameraSwitch;
     private SwitchPreferenceCompat mMuteMediaSwitch;
     private SwitchPreferenceCompat mSliderDialogSwitch;
     private SwitchPreferenceCompat mSliderDozeSwitch;
@@ -181,18 +175,6 @@ public class DeviceSettings extends PreferenceFragment implements
         mFpsInfo.setChecked(isFPSOverlayRunning());
         mFpsInfo.setOnPreferenceChangeListener(this);
 
-        PreferenceCategory mCameraCategory = findPreference(KEY_CATEGORY_CAMERA);
-        boolean hasPopup = Utils.isPackageInstalled(POPUP_HELPER_PKG_NAME, getContext());
-        if (hasPopup) {
-            mAlwaysCameraSwitch = findPreference(KEY_ALWAYS_CAMERA_DIALOG);
-            boolean enabled = Settings.System.getInt(getContext().getContentResolver(),
-                    KEY_SETTINGS_PREFIX + KEY_ALWAYS_CAMERA_DIALOG, 0) == 1;
-            mAlwaysCameraSwitch.setChecked(enabled);
-            mAlwaysCameraSwitch.setOnPreferenceChangeListener(this);
-        } else {
-            mCameraCategory.setVisible(false);
-        }
-
         // Registering observers
         final SharedPreferences prefs = Constants.getDESharedPrefs(getContext());
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -221,11 +203,6 @@ public class DeviceSettings extends PreferenceFragment implements
             Intent fpsinfo = new Intent(getContext(), FPSInfoService.class);
             if (enabled) getContext().startService(fpsinfo);
             else getContext().stopService(fpsinfo);
-        } else if (preference == mAlwaysCameraSwitch) {
-            boolean enabled = (Boolean) newValue;
-            Settings.System.putInt(resolver,
-                    KEY_SETTINGS_PREFIX + KEY_ALWAYS_CAMERA_DIALOG,
-                    enabled ? 1 : 0);
         } else if (preference == mRefreshRate) {
             Boolean enabled = (Boolean) newValue;
             RefreshRateSwitch.setPeakRefresh(getContext(), enabled);

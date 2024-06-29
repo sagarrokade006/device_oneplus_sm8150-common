@@ -22,12 +22,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.android.systemui.permission.PLUGIN" />
 
     <protected-broadcast android:name="com.everest.device.DeviceSettings.UPDATE_SETTINGS" />
     <protected-broadcast android:name="com.everest.device.DeviceSettings.UPDATE_SLIDER" />
-    <protected-broadcast android:name="android.intent.action.SCREEN_CAMERA_GESTURE" />
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <application
@@ -49,19 +47,12 @@
                 android:resource="@drawable/ic_settings_device" />
             <meta-data
                 android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.homepage" />
+                android:value="com.android.settings.category.ia.system" />
             <meta-data android:name="com.android.settings.summary"
                 android:resource="@string/device_summary" />
         </activity>
 
         <activity android:name=".KeyHandler" android:exported="false" />
-
-        <activity
-            android:name=".TouchscreenGestureSettings"
-            android:label="@string/touchscreen_gesture_settings_title"
-            android:theme="@style/Theme.SubSettingsBase"
-            android:exported="false">
-        </activity>
 
         <receiver
             android:name="com.everest.device.DeviceSettings.Startup"
