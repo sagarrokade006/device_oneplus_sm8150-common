@@ -132,18 +132,18 @@ PRODUCT_PACKAGES += \
     audio.bluetooth.default \
     audio.r_submix.default \
     audio.usb.default \
-    libaudio-resampler \
-    libaudioroute \
-    libhdmiedid \
-    libexthwplugin \
-    libhfp \
-    libqcompostprocbundle \
-    libqcomvisualizer \
-    libqcomvoiceprocessing \
-    libsndmonitor \
-    libspkrprot \
-    libtinycompress \
-    libvolumelistener \
+    libaudio-resampler:64 \
+    libaudioroute:64 \
+    libhdmiedid:64 \
+    libexthwplugin:64 \
+    libhfp:64 \
+    libqcompostprocbundle:64 \
+    libqcomvisualizer:64 \
+    libqcomvoiceprocessing:64 \
+    libsndmonitor:64 \
+    libspkrprot:64 \
+    libtinycompress:64 \
+    libvolumelistener:64 \
     tinymix
 
 PRODUCT_COPY_FILES += \
@@ -340,7 +340,7 @@ PRODUCT_PACKAGES += \
 # Lineage Health
 PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default
-    
+
 # Media
 PRODUCT_COPY_FILES += \
     hardware/qcom-caf/sm8150/media/conf_files/msmnile/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
