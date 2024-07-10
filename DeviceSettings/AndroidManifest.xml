@@ -14,7 +14,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           android:sharedUserId="android.uid.system"
-          package="com.everest.device.DeviceSettings"
+          package="com.lineage.device.DeviceSettings"
           android:versionCode="1"
           android:versionName="1.0" >
 
@@ -24,8 +24,8 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="com.android.systemui.permission.PLUGIN" />
 
-    <protected-broadcast android:name="com.everest.device.DeviceSettings.UPDATE_SETTINGS" />
-    <protected-broadcast android:name="com.everest.device.DeviceSettings.UPDATE_SLIDER" />
+    <protected-broadcast android:name="com.lineage.device.DeviceSettings.UPDATE_SETTINGS" />
+    <protected-broadcast android:name="com.lineage.device.DeviceSettings.UPDATE_SLIDER" />
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <application
@@ -55,7 +55,7 @@
         <activity android:name=".KeyHandler" android:exported="false" />
 
         <receiver
-            android:name="com.everest.device.DeviceSettings.Startup"
+            android:name="com.lineage.device.DeviceSettings.Startup"
             android:directBootAware="true"
             android:exported="false" >
             <intent-filter android:priority="100" >
@@ -66,7 +66,7 @@
 
         <!-- Quick Settings Tiles -->
         <service
-            android:name="com.everest.device.DeviceSettings.DCModeTileService"
+            android:name="com.lineage.device.DeviceSettings.DCModeTileService"
             android:icon="@drawable/ic_dimming_off"
             android:label="@string/tile_dc_mode"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
@@ -79,7 +79,7 @@
                 android:value="true" />
         </service>
         <service
-            android:name="com.everest.device.DeviceSettings.HBMModeTileService"
+            android:name="com.lineage.device.DeviceSettings.HBMModeTileService"
             android:icon="@drawable/ic_hbm_tile"
             android:label="@string/tile_hbm_mode"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
@@ -92,7 +92,7 @@
                 android:value="true" />
         </service>
         <service
-            android:name="com.everest.device.DeviceSettings.RefreshRateTileService"
+            android:name="com.lineage.device.DeviceSettings.RefreshRateTileService"
             android:icon="@drawable/ic_refresh_tile_60"
             android:label="@string/tile_refresh_rate"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
@@ -105,7 +105,7 @@
                 android:value="true" />
         </service>
 
-        <service android:name="com.everest.device.DeviceSettings.FPSInfoService"
+        <service android:name="com.lineage.device.DeviceSettings.FPSInfoService"
                 android:exported="false">
         </service>
 
@@ -137,7 +137,7 @@
                 android:value="true" />
         </service>
 
-        <service android:name="com.everest.device.DeviceSettings.HBMModeService"
+        <service android:name="com.lineage.device.DeviceSettings.HBMModeService"
             android:exported="false" />
 
         <service
@@ -151,7 +151,7 @@
         <!-- Search indexing -->
         <provider
             android:name=".SettingsSearchIndexablesProvider"
-            android:authorities="com.everest.device"
+            android:authorities="com.lineage.device"
             android:multiprocess="false"
             android:grantUriPermissions="true"
             android:permission="android.permission.READ_SEARCH_INDEXABLES"

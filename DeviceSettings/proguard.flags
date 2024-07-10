@@ -1,3 +1,3 @@
--keep class com.everest.device.DeviceSettings.* {
+-keep class com.lineage.device.DeviceSettings.* {
   *;
 }
