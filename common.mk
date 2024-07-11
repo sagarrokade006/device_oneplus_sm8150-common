@@ -118,8 +118,8 @@ PRODUCT_PACKAGES += \
     com.dsi.ant@1.0.vendor
 
 # MattrixProject Device Settings
-PRODUCT_PACKAGES += \
-    DeviceSettings
+#PRODUCT_PACKAGES += \
+#   DeviceSettings
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -196,7 +196,6 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl:64 \
     android.hardware.camera.provider@2.4-service_64 \
     libxml2 \
-    Snap \
     libcamera_metadata_shim \
     libutilscallstack.vendor:64 \
     vendor.oneplus.hardware.camera@1.0.vendor:64 \
