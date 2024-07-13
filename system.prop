@@ -106,3 +106,8 @@ persist.sys.wfd.virtual=0
 persist.service.adb.enable=1                                                    
 persist.service.debuggable=1
 persist.sys.usb.config=mtp,adb
+
+# Blur
+ro.sf.blurs_are_expensive=0
+ro.surface_flinger.supports_background_blur=0
+persist.sysui.disableBlur=true
