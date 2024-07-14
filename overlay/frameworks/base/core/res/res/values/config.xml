@@ -554,4 +554,7 @@
 
     <!-- Maximum strength, in percentage, supported by bright color reduction. -->
     <integer name="config_reduceBrightColorsStrengthMax">80</integer>
+
+    <!-- Whether devices suports in-display fingerprint when screen is off -->
+    <bool name="config_supportsScreenOffUdfps">true</bool>
 </resources>
